@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'bootstrap-sass', '~> 2.1' # gem to add Bootstrap framework for visual formatting purposes
+gem 'bcrypt-ruby', '~> 3.0.1' # gem to add bcrypt (irreversibly encrypt passwords to form the password hash)
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -9,6 +10,10 @@ gem 'bootstrap-sass', '~> 2.1' # gem to add Bootstrap framework for visual forma
 group :development do
   gem 'sqlite3', '1.3.5'
   gem 'rspec-rails', '~> 2.11.0' # gem to RSpec (alternative to the default testing framework)
+end
+
+group :development do
+  gem 'annotate', '~> 2.5.0' # this adds comments containing data model to model file app/models
 end
 
 # Gems used only for assets and not required
