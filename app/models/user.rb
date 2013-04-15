@@ -31,7 +31,8 @@ class User < ActiveRecord::Base
           uniqueness: { case_sensitive: false } # tests for email uniqueness (not sensitive to case)
 
   # validates presence of a password and its length
-  validates :password, presence: true, length: { minimum: 6 }
+  # validates :password, presence: true, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 } # changed from the one above to avoid duplication of error messages because we added the hack for a better error message for missing passwords
   # validates presence of a confirmation password
   validates :password_confirmation, presence: true
 
