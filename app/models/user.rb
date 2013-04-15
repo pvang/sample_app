@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
   has_secure_password
 
   # ensures email uniqueness by downcasing the email attribute
-  before_save { |user| user.email = email.downcase }
+  before_save { |user| user.email = email.downcase } # this works
+  # before_save { self.email.downcase! } # so does this
 
   # name cannot be blank
   # name characters cannot exceed 50
