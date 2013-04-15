@@ -10,9 +10,6 @@ gem 'bcrypt-ruby', '~> 3.0.1' # gem to add bcrypt (irreversibly encrypt password
 group :development do
   gem 'sqlite3', '1.3.5'
   gem 'rspec-rails', '~> 2.11.0' # gem to RSpec (alternative to the default testing framework)
-end
-
-group :development do
   gem 'annotate', '~> 2.5.0' # this adds comments containing data model to model file app/models
 end
 
@@ -47,6 +44,7 @@ gem 'jquery-rails', '~> 2.0.2'
 
 group :test do
   gem 'capybara', '~> 1.1.2' # this gem will allow us to simulate a user's interaction using natural english-like syntax
+  gem 'factory_girl_rails', '~> 4.1.0' # a more convenient way to define user objects and insert them into databases
 end
 
 group :production do
