@@ -1,11 +1,26 @@
 SampleApp::Application.routes.draw do
-  get "static_pages/home"
 
-  get "static_pages/help"
+  get "users/new" # auto created by controller (we keep this to work for now)
 
-  get "static_pages/about"
+# un-named routes
+  # get "static_pages/home" 
 
-  get "static_pages/contact"
+  # get "users/new"
+
+  # get "static_pages/help"
+  # get "static_pages/about"
+  # get "static_pages/contact"
+
+# named routes
+  # match '/', to: 'static_pages#home' # we could use this to establish route mapping for the home page, but we'll do something else--scroll down on this page and look for the many stars
+  # root :to => 'welcome#index' # we won't do this because we're deleting our public/index.html file
+  root :to => 'static_pages#home' # call using root_path --> setting it as our default page
+
+  match '/signup', to: 'users#new' # call using signup_path
+
+  match '/help', to: 'static_pages#help' # call using help_path
+  match '/about', to: 'static_pages#about' # call using about_path
+  match '/contact', to: 'static_pages#contact' # call using contact_path
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -56,7 +71,7 @@ SampleApp::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  # root :to => 'welcome#index' # ********************************************
 
   # See how all your routes lay out with "rake routes"
 
