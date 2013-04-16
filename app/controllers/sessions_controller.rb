@@ -4,8 +4,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_email(params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password]) # sign user in and redirect to the show page
+    user = User.find_by_email(params[:email].downcase) # user = User.find_by_email(params[:session][:email].downcase)
+    if user && user.authenticate(params[:password]) # if user && user.authenticate(params[:session][:password]) # sign user in and redirect to the show page
+      session[:user] = user.id # added when refactored the signin form to use form_tag in place of form_for
       sign_in user
       redirect_to user
     else
