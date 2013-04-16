@@ -138,6 +138,14 @@ describe User do
 		end
 	end
 
+  	describe "accessible attributes" do # test to verify that the User admin attribute isn’t accessible
+    	it "should not allow to access to admin attribute" do
+      		expect do
+		        User.new(:admin => true)
+      		end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+	    end
+  	end
+
     describe "remember token" do # test for a valid (non-blank) remember token
       before { @user.save }
       its(:remember_token) { should_not be_blank }
