@@ -17,6 +17,12 @@ describe "Authentication" do # tests for the new session action and view
       it { should have_selector('title', text: 'Sign In') }
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
 
+      # it { should_not have_link('Profile', href: user_path(user)) }
+      it { should_not have_link('Profile') } # tests that link does not appear when a user is not signed in
+      
+      # it { should_not have_link('Settings', href: edit_user_path(user)) }
+      it { should_not have_link('Settings') } # tests that link does not appear when a user is not signed in
+
       describe "after visiting another page" do # test for signin failure
         before { click_link "Home" }
         it { should_not have_selector('div.alert.alert-error') }
