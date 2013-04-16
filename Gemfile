@@ -45,6 +45,9 @@ gem 'jquery-rails', '~> 2.0.2'
 group :test do
   gem 'capybara', '~> 1.1.2' # this gem will allow us to simulate a user's interaction using natural english-like syntax
   gem 'factory_girl_rails', '~> 4.1.0' # a more convenient way to define user objects and insert them into databases
+
+  gem 'cucumber-rails', '~> 1.2.1', :require => false # cucumber-rails gem (used for writing signin tests, a popular tool for behavior-driven development)
+  gem 'database_cleaner', '~> 0.7.0' # utility gem
 end
 
 group :production do

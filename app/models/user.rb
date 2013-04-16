@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   before_save { |user| user.email = email.downcase } # this works
   # before_save { self.email.downcase! } # so does this
 
+  before_save :create_remember_token # a before_save callback to create remember_token
+
   # name cannot be blank
   # name characters cannot exceed 50
   # validates(:name, presence: true)
@@ -35,5 +37,11 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 } # changed from the one above to avoid duplication of error messages because we added the hack for a better error message for missing passwords
   # validates presence of a confirmation password
   validates :password_confirmation, presence: true
+
+  private
+
+    def create_remember_token
+      self.remember_token = SecureRandom.urlsafe_base64
+    end
 
 end

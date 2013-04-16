@@ -28,9 +28,11 @@ describe User do
 	it { should respond_to(:password) } # test for password attribute
 	it { should respond_to(:password_confirmation) } # test for password confirmation attribute
 
-	it { should be_valid } # verify that the @user object is initially valid
+    it { should respond_to(:remember_token) } # test for the remember token
 
 	it { should respond_to(:authenticate) } # test for authenticate method
+
+	it { should be_valid } # verify that the @user object is initially valid
 
 	describe "when name is not present" do # validates name is not blank
 		before { @user.name = " " }
@@ -122,5 +124,10 @@ describe User do
 			@user.reload.email.should == mixed_case_email.downcase
 		end
 	end
+
+    describe "remember token" do # test for a valid (non-blank) remember token
+      before { @user.save }
+      its(:remember_token) { should_not be_blank }
+    end
 
 end

@@ -2,7 +2,7 @@ SampleApp::Application.routes.draw do
 
   # get "users/new" # auto created by controller (we keep this to work for now)
   resources :users # this removes the get "users/new" line--because resources :users doesn’t just add a working /users/1 URI, it endows our application with all the actions needed for a RESTful Users resource, along with a large number of named routes for generating user URIs
-
+  resources :sessions, only: [:new, :create, :destroy] # this is a resource to get the standard RESTful actions for sessions (since Sessions does not have a need to show or edit sessions, we’ve restricted the actions to new, create, and destroy using the :only option)
 # un-named routes
   # get "static_pages/home" 
 
@@ -17,11 +17,13 @@ SampleApp::Application.routes.draw do
   # root :to => 'welcome#index' # we won't do this because we're deleting our public/index.html file
   root :to => 'static_pages#home' # call using root_path --> setting it as our default page
 
-  match '/signup', to: 'users#new' # call using signup_path
-
   match '/help', to: 'static_pages#help' # call using help_path
   match '/about', to: 'static_pages#about' # call using about_path
   match '/contact', to: 'static_pages#contact' # call using contact_path
+
+  match '/signup', to: 'users#new' # call using signup_path
+  match '/signin', to: 'sessions#new' # call using signin_path
+  match '/signout', to: 'sessions#destroy', via: :delete # call using signout_path, the "via: :delete" indicates that this path should be invoked using an HTTP DELETE request
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
