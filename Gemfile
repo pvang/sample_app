@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 gem 'bootstrap-sass', '~> 2.1' # gem to add Bootstrap framework for visual formatting purposes
 gem 'bcrypt-ruby', '~> 3.0.1' # gem to add bcrypt (irreversibly encrypt passwords to form the password hash)
+gem 'faker', '~> 1.0.1' # faker gem (allows us to make sample users with semi-realistic names and email addresses)
+gem 'will_paginate', '~> 3.0.3' # the simplest and most robust pagination method in Rails
+gem 'bootstrap-will_paginate', '~> 0.0.6' # configures will_paginate to use Bootstrap’s pagination styles
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

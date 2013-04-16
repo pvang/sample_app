@@ -32,7 +32,20 @@ describe User do
 
 	it { should respond_to(:authenticate) } # test for authenticate method
 
+    it { should respond_to(:admin) } # tests for an admin attribute
+    it { should respond_to(:authenticate) } # tests for an admin attribute
+
 	it { should be_valid } # verify that the @user object is initially valid
+	it { should_not be_admin }
+
+    describe "with admin attribute set to 'true'" do # tests for an admin attribute
+      before do
+        @user.save!
+        @user.toggle!(:admin) # flip the admin attribute from false to true with toggle
+      end
+
+      it { should be_admin }
+    end
 
 	describe "when name is not present" do # validates name is not blank
 		before { @user.name = " " }
