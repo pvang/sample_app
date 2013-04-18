@@ -14,23 +14,32 @@ class UsersController < ApplicationController
   end
 
   def new # user new action
-    @user = User.new # an @user variable to the new action
+    # @user = User.new # an @user variable to the new action
+    if signed_in? # redirect to root path if signed in
+      redirect_to root_path
+    else
+      signed_in? ? admin_user : @user = User.new # restrict access to the new and create actions
+    end
   end
 
   def destroy # user destroy action
     User.find(params[:id]).destroy # uses method chaining to combine the find and destroy into one line
-    flash[:success] = "User destroyed."
+    flash[:success] = "User destroyed"
     redirect_to users_url
   end
 
   def create # user create action
-    @user = User.new(params[:user])
-    if @user.save
-       sign_in @user # signing in the user upon sign up
-       flash[:success] = "Welcome to the Sample App!"
-       redirect_to @user # action that handles signup success (redirecting)
+    if signed_in? # redirect to root path if signed in
+      redirect_to root_path
     else
-      render 'new' # action that handles signup unsuccess
+      @user = User.new(params[:user])
+      if @user.save
+         sign_in @user # signing in the user upon sign up
+         flash[:success] = "Welcome to the Sample App!"
+         redirect_to @user # action that handles signup success (redirecting)
+      else
+        render 'new' # action that handles signup unsuccess
+      end
     end
   end
 
