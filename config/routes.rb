@@ -3,6 +3,8 @@ SampleApp::Application.routes.draw do
   # get "users/new" # auto created by controller (we keep this to work for now)
   resources :users # this removes the get "users/new" line--because resources :users doesn’t just add a working /users/1 URI, it endows our application with all the actions needed for a RESTful Users resource, along with a large number of named routes for generating user URIs
   resources :sessions, only: [:new, :create, :destroy] # this is a resource to get the standard RESTful actions for sessions (since Sessions does not have a need to show or edit sessions, we’ve restricted the actions to new, create, and destroy using the :only option)
+  resources :microposts, only: [:create, :destroy] # routes for the microposts resource
+
 # un-named routes
   # get "static_pages/home" 
 

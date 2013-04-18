@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
   def show # user show action
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page]) # adding an @microposts instance variable
   end
 
   def new # user new action
@@ -60,12 +61,13 @@ class UsersController < ApplicationController
 
   private
 
-    def signed_in_user # to require users to be signed in, we define a signed_in_user method and invoke it using before_filter
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
-    end
+    # moved into app/helpers/sessions_helper.rb (removed to eliminate code duplication)
+    # def signed_in_user # to require users to be signed in, we define a signed_in_user method and invoke it using before_filter
+      # unless signed_in?
+        # store_location
+        # redirect_to signin_url, notice: "Please sign in."
+      # end
+    # end
 
     def correct_user # to require correct user
       @user = User.find(params[:id])
