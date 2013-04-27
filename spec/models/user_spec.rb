@@ -37,6 +37,9 @@ describe User do
     it { should respond_to(:admin) } # tests for an admin attribute
     it { should respond_to(:authenticate) } # tests for an admin attribute
 
+    it { should respond_to(:feed) } # tests for the user.relationships attribute
+    it { should respond_to(:relationships) } # tests for the user.relationships attribute
+
 	it { should be_valid } # verify that the @user object is initially valid
 	it { should_not be_admin }
 

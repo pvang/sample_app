@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
   has_many :microposts, dependent: :destroy # a user has_many microposts and their microposts are destroyed along with them when they are
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy # implementing the user/relationships has_many association
 
   # ensures email uniqueness by downcasing the email attribute
   before_save { |user| user.email = email.downcase } # this works
