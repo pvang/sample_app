@@ -39,6 +39,12 @@ describe User do
 
     it { should respond_to(:feed) } # tests for the user.relationships attribute
     it { should respond_to(:relationships) } # tests for the user.relationships attribute
+    it { should respond_to(:reverse_relationships) } # tests for reverse relationships
+    it { should respond_to(:followers) } # tests for reverse relationships
+    it { should respond_to(:followed_users) } # test for the user.followed_users attribute
+    it { should respond_to(:following?) } # tests for some "following" utility methods
+    it { should respond_to(:follow!) } # tests for some "following" utility methods
+    it { should respond_to(:unfollow!) } # test for unfollowing a user
 
 	it { should be_valid } # verify that the @user object is initially valid
 	it { should_not be_admin }
@@ -186,8 +192,30 @@ describe User do
         microposts.should_not be_empty
         microposts.each do |micropost|
           Micropost.find_by_id(micropost.id).should be_nil
-        end
       end
-	end
+   end
 
+   describe "following" do # tests for some "following" utility methods
+     let(:other_user) { FactoryGirl.create(:user) }    
+     before do
+       @user.save
+       @user.follow!(other_user)
+     end
+
+     it { should be_following(other_user) }
+     its(:followed_users) { should include(other_user) }
+
+     describe "followed user" do # test for reverse relationships
+       subject { other_user }
+       its(:followers) { should include(@user) }
+     end
+
+     describe "and unfollowing" do
+       before { @user.unfollow!(other_user) }
+
+       it { should_not be_following(other_user) }
+       its(:followed_users) { should_not include(other_user) }
+     end
+   end
+ end
 end

@@ -15,6 +15,11 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :microposts, dependent: :destroy # a user has_many microposts and their microposts are destroyed along with them when they are
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy # implementing the user/relationships has_many association
+  has_many :followed_users, through: :relationships, source: :followed # adding the User model followed_users association
+  has_many :reverse_relationships, foreign_key: "followed_id", # implementing user.followers using reverse relationships
+                                    class_name: "Relationship",
+                                     dependent: :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower # implementing user.followers using reverse relationships
 
   # ensures email uniqueness by downcasing the email attribute
   before_save { |user| user.email = email.downcase } # this works
@@ -43,6 +48,18 @@ class User < ActiveRecord::Base
   def feed # preliminary implementation for the micropost status feed
     # This is preliminary. See "Following users" for the full implementation.
     Micropost.where("user_id = ?", id)
+  end
+
+  def following?(other_user) # following? utility method
+    relationships.find_by_followed_id(other_user.id)
+  end
+
+  def follow!(other_user) # follow! utility method
+    relationships.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user) # unfollowing a user by destroying a user relationship
+    relationships.find_by_followed_id(other_user.id).destroy
   end
 
   private

@@ -25,4 +25,14 @@ describe Relationship do
     its(:followed) { should == followed }
   end
 
+  describe "when followed id is not present" do # testing the relationship model validations
+    before { relationship.followed_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when follower id is not present" do # testing the relationship model validations
+    before { relationship.follower_id = nil }
+    it { should_not be_valid }
+  end
+
 end
