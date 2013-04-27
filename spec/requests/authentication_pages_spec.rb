@@ -73,6 +73,18 @@ describe "Authentication" do # tests for the new session action and view
         end
       end
 
+      describe "in the Relationships controller" do # tests for the Relationships controller authorization
+        describe "submitting to the create action" do
+          before { post relationships_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete relationship_path(1) }
+          specify { response.should redirect_to(signin_path) }          
+        end
+      end
+
       describe "when attempting to visit a protected page" do # test for friendly forwarding
         before do
           visit edit_user_path(user)
@@ -103,6 +115,16 @@ describe "Authentication" do # tests for the new session action and view
 
         describe "visiting the user index" do # testing that the index action is protected
           before { visit users_path }
+          it { should have_selector('title', text: 'Sign In') }
+        end
+
+        describe "visiting the following page" do # test for the authorization of the following page
+          before { visit following_user_path(user) }
+          it { should have_selector('title', text: 'Sign In') }
+        end
+
+        describe "visiting the followers page" do # test for the authorization of the followers page
+          before { visit followers_user_path(user) }
           it { should have_selector('title', text: 'Sign In') }
         end
 
