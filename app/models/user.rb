@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
 
   def feed # preliminary implementation for the micropost status feed
     # This is preliminary. See "Following users" for the full implementation.
-    Micropost.where("user_id = ?", id)
+    Micropost.from_users_followed_by(self) # Micropost.where("user_id = ?", id)
   end
 
   def following?(other_user) # following? utility method
