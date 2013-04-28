@@ -102,6 +102,28 @@ describe "User pages" do
         end
       end
 
+      describe "user stats displayed properly" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          user.follow!(other_user)
+          other_user.follow!(user)
+          visit user_path(user)
+        end
+
+        it { should have_selector('strong#following', text:'1') }
+        it { should have_selector('strong#followers', text:'1') }
+
+        describe "after unfollowing a user" do
+          before { user.unfollow!(other_user); visit user_path(user) }
+          it { should have_selector('strong#following', text: '0') }
+        end
+
+        describe "after being unfollowed by a user" do
+          before { other_user.unfollow!(user); visit user_path(user) }
+          it { should have_selector('strong#followers', text: '0') }
+        end
+      end
+
     end
 
     describe "delete links" do # tests for delete links
