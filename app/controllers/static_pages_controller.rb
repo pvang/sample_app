@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   	# @micropost = current_user.microposts.build if signed_in? # a micropost instance variable to the home action
     if signed_in? # adding a feed instance variable to the home action
       @micropost  = current_user.microposts.build
-      @feed_items = current_user.feed.paginate(page: params[:page])
+      @feed_items = current_user.feed.paginate(page: params[:page]) # home action with a paginated feed
     end
   end
 
